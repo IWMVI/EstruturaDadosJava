@@ -9,8 +9,7 @@ import java.util.Random;
 public class Exerc01 {
 	public static void main(String[] args) {
 
-		// int mat[][] = { { 4, 5, 6, 9, 201, 5, 0, 201 }, { 201, 6, 8, 9, 4, 201, 6,
-		// 201 } }; ------ TESTE
+//		int mat[][] = { { 4, 5, 6, 9, 201, 5, 0, 201 }, { 201, 6, 8, 9, 4, 201, 6, 201 } }; // ------ TESTE
 
 		Random rand = new Random();
 

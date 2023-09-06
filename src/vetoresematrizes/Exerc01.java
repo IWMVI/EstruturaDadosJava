@@ -20,7 +20,7 @@ public class Exerc01 {
 			}
 		}
 
-		encontrarValores(mat, 0, 0); // Chamando a função para encontrar todos os valores 201
+		encontrarValores(mat, 0, 0);
 	}
 
 	public static void encontrarValores(int[][] mat, int linha, int coluna) {

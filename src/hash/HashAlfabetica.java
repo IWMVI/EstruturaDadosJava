@@ -1,62 +1,53 @@
 package hash;
 
+import java.util.TreeSet;
 class HashAlfabetica extends Hash {
+    private TreeSet<Pessoa> pessoasOrdenadas;
+
     public HashAlfabetica(int tamVet, int max) {
         super(tamVet, max);
+        pessoasOrdenadas = new TreeSet<>((p1, p2) -> p1.getNome().compareToIgnoreCase(p2.getNome()));
     }
 
-    public void printAlfabetico() {
-        // Implementação para imprimir em ordem alfabética
-        for (char letra = 'A'; letra <= 'Z'; letra++) {
-            for (int i = 0; i < maxPosicoes; i++) {
-                if (estrutura[i] != null && estrutura[i].getNome().toUpperCase().charAt(0) == letra) {
-                    System.out.println("Posicao: " + i);
-                    System.out.println("ID: " + estrutura[i].getId());
-                    System.out.println("Nome: " + estrutura[i].getNome());
-                    System.out.println();
-                }
-            }
-        }
+    @Override
+    public void push(Pessoa pessoa) {
+        super.push(pessoa);
+        pessoasOrdenadas.add(pessoa);
     }
 
-    public void searchPorLetra(char letra, boolean[] busca) {
-        letra = Character.toUpperCase(letra);
-        for (int i = 0; i < maxPosicoes; i++) {
-            if (estrutura[i] != null && estrutura[i].getNome().toUpperCase().charAt(0) == letra) {
-                busca[0] = true;
-                break;
-            }
+    @Override
+    public void pop(Pessoa pessoa) {
+        super.pop(pessoa);
+        pessoasOrdenadas.remove(pessoa);
+    }
+
+    @Override
+    public void print() {
+        for (Pessoa pessoa : pessoasOrdenadas) {
+            System.out.println("Posicao: " + (pessoa.getId() % maxPosicoes));
+            System.out.println("ID: " + pessoa.getId());
+            System.out.println("Nome: " + pessoa.getNome());
+            System.out.println();
         }
-        busca[0] = false;
     }
 
     public void verificarOrdemAlfabetica() {
-        // Implementação para verificar a ordem alfabética
         boolean ordemCorreta = true;
-        for (int i = 1; i < maxPosicoes; i++) {
-            if (estrutura[i] != null && estrutura[i - 1] != null &&
-                estrutura[i].getNome().compareToIgnoreCase(estrutura[i - 1].getNome()) < 0) {
+    
+        Pessoa[] pessoasArray = pessoasOrdenadas.toArray(new Pessoa[0]);
+    
+        for (int i = 0; i < pessoasArray.length - 1; i++) {
+            if (pessoasArray[i].getNome().compareToIgnoreCase(pessoasArray[i + 1].getNome()) > 0) {
                 ordemCorreta = false;
                 break;
             }
         }
-
+    
         if (ordemCorreta) {
             System.out.println("A estrutura está em ordem alfabética.");
         } else {
             System.out.println("A estrutura não está em ordem alfabética.");
         }
     }
-
-    @Override
-    public Pessoa search(int id) {
-        int local = id % maxPosicoes;
-        while (estrutura[local] != null) {
-            if (estrutura[local].getId() == id) {
-                return estrutura[local];
-            }
-            local = (local + 1) % maxPosicoes; // Tratamento de colisão linear
-        }
-        return null; // Pessoa não encontrada
-    }
+    
 }

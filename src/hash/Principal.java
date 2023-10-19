@@ -6,7 +6,7 @@ public class Principal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Hash hashAlfabetica = new Hash(26, 26);
+        Hash hashAlfabetica = new HashAlfabetica(26, 26);
         Hash hashNomes = new Hash(50, 50);
         Hash hashLista = new Hash(100, 100);
 
@@ -71,14 +71,14 @@ public class Principal {
                     break;
                 case 6:
                     if (hash instanceof HashAlfabetica) {
-                        ((HashAlfabetica) hash).printAlfabetico();
+                        ((HashAlfabetica) hash).print();
                     } else {
                         System.out.println("Essa operação só é válida para a Hash Alfabética.");
                     }
                     break;
                 case 7:
                     if (hash instanceof HashAlfabetica) {
-                        pesquisarPorLetra((HashAlfabetica) hash, scanner);
+                        pesquisarPessoa((HashAlfabetica) hash, scanner);
                     } else {
                         System.out.println("Essa operação só é válida para a Hash Alfabética.");
                     }
@@ -160,7 +160,7 @@ public class Principal {
         }
     }
 
-    private static void pesquisarPorLetra(HashAlfabetica hash, Scanner scanner) {
+   /* private static void pesquisarPorLetra(HashAlfabetica hash, Scanner scanner) {
         System.out.print("Digite a letra para pesquisar: ");
         char letra = scanner.next().charAt(0);
 
@@ -171,7 +171,7 @@ public class Principal {
         } else {
             System.out.println("Nenhuma pessoa encontrada com a letra " + letra);
         }
-    }
+    } */
 
     private static void verificarOrdemAlfabetica(HashAlfabetica hash) {
         hash.verificarOrdemAlfabetica();

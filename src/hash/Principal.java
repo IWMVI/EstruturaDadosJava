@@ -3,6 +3,8 @@ package hash;
 import java.util.Scanner;
 
 public class Principal {
+    private static final int SAIR = 0;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -18,23 +20,17 @@ public class Principal {
             opcao = scanner.nextInt();
 
             switch (opcao) {
-                case 1:
-                    tratarHash(hashAlfabetica, scanner);
+                case 1, 2, 3:
+                    tratarHash(getHash(opcao, hashAlfabetica, hashNomes, hashLista), scanner);
                     break;
-                case 2:
-                    tratarHash(hashNomes, scanner);
-                    break;
-                case 3:
-                    tratarHash(hashLista, scanner);
-                    break;
-                case 0:
+                case SAIR:
                     System.out.println("Saindo do programa.");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
 
-        } while (opcao != 0);
+        } while (opcao != SAIR);
     }
 
     private static void exibirMenu() {
@@ -44,6 +40,19 @@ public class Principal {
         System.out.println("3. Tratar Hash Lista");
         System.out.println("0. Sair");
         System.out.println();
+    }
+
+    private static Hash getHash(int opcao, Hash hashAlfabetica, Hash hashNomes, Hash hashLista) {
+        switch (opcao) {
+            case 1:
+                return hashAlfabetica;
+            case 2:
+                return hashNomes;
+            case 3:
+                return hashLista;
+            default:
+                throw new IllegalArgumentException("Opção inválida para obtenção de Hash.");
+        }
     }
 
     private static void tratarHash(Hash hash, Scanner scanner) {
@@ -70,37 +79,17 @@ public class Principal {
                 case 5:
                     hash.print();
                     break;
-                case 6:
-                    if (hash instanceof HashAlfabetica) {
-                        ((HashAlfabetica) hash).print();
-                    } else {
-                        System.out.println("Essa operação só é válida para a Hash Alfabética.");
-                    }
+                case 6, 7, 8:
+                    tratarOpcoesHashAlfabetica((HashAlfabetica) hash, opcao, scanner);
                     break;
-                case 7:
-                    if (hash instanceof HashAlfabetica) {
-                        System.out.print("Digite a letra para pesquisar: ");
-                        char letra = scanner.next().charAt(0);
-                        ((HashAlfabetica) hash).pesquisarPorLetra(letra);
-                    } else {
-                        System.out.println("Essa operação só é válida para a Hash Alfabética.");
-                    }
-                    break;
-                case 8:
-                    if (hash instanceof HashAlfabetica) {
-                        verificarOrdemAlfabetica((HashAlfabetica) hash);
-                    } else {
-                        System.out.println("Essa operação só é válida para a Hash Alfabética.");
-                    }
-                    break;
-                case 0:
+                case SAIR:
                     System.out.println("Saindo do tratamento da Hash.");
                     break;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
             }
 
-        } while (opcao != 0);
+        } while (opcao != SAIR);
     }
 
     private static void exibirMenuHash(Hash hash) {
@@ -112,13 +101,25 @@ public class Principal {
         System.out.println("5. Imprimir");
 
         if (hash instanceof HashAlfabetica) {
-            System.out.println("6. Imprimir em Ordem Alfabética");
-            System.out.println("7. Pesquisar por Letra");
-            System.out.println("8. Verificar Ordem Alfabética");
+            System.out.println("6. Pesquisar por Letra");
+            System.out.println("7. Verificar Ordem Alfabética");
         }
 
         System.out.println("0. Sair do tratamento da Hash");
         System.out.println();
+    }
+
+    private static void tratarOpcoesHashAlfabetica(HashAlfabetica hashAlfabetica, int opcao, Scanner scanner) {
+        switch (opcao) {
+            case 6:
+                pesquisarPorLetra(hashAlfabetica, scanner);
+                break;
+            case 7:
+                verificarOrdemAlfabetica(hashAlfabetica);
+                break;
+            default:
+                System.out.println("Opção inválida para Hash Alfabética. Tente novamente.");
+        }
     }
 
     private static void adicionarPessoa(Hash hash, Scanner scanner) {
@@ -163,7 +164,13 @@ public class Principal {
         }
     }
 
-    private static void verificarOrdemAlfabetica(HashAlfabetica hash) {
-        hash.verificarOrdemAlfabetica();
+    private static void pesquisarPorLetra(HashAlfabetica hashAlfabetica, Scanner scanner) {
+        System.out.print("Digite a letra para pesquisar: ");
+        char letra = scanner.next().charAt(0);
+        hashAlfabetica.pesquisarPorLetra(letra);
+    }
+
+    private static void verificarOrdemAlfabetica(HashAlfabetica hashAlfabetica) {
+        hashAlfabetica.verificarOrdemAlfabetica();
     }
 }

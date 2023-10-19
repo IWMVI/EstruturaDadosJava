@@ -6,7 +6,7 @@ public class Principal {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Hash hashAlfabetica = new HashAlfabetica(26, 26);
+        HashAlfabetica hashAlfabetica = new HashAlfabetica(26, 26);
         Hash hashNomes = new Hash(50, 50);
         Hash hashLista = new Hash(100, 100);
 
@@ -43,6 +43,7 @@ public class Principal {
         System.out.println("2. Tratar Hash Nomes");
         System.out.println("3. Tratar Hash Lista");
         System.out.println("0. Sair");
+        System.out.println();
     }
 
     private static void tratarHash(Hash hash, Scanner scanner) {
@@ -78,7 +79,9 @@ public class Principal {
                     break;
                 case 7:
                     if (hash instanceof HashAlfabetica) {
-                        pesquisarPessoa((HashAlfabetica) hash, scanner);
+                        System.out.print("Digite a letra para pesquisar: ");
+                        char letra = scanner.next().charAt(0);
+                        ((HashAlfabetica) hash).pesquisarPorLetra(letra);
                     } else {
                         System.out.println("Essa operação só é válida para a Hash Alfabética.");
                     }
@@ -115,6 +118,7 @@ public class Principal {
         }
 
         System.out.println("0. Sair do tratamento da Hash");
+        System.out.println();
     }
 
     private static void adicionarPessoa(Hash hash, Scanner scanner) {
@@ -132,16 +136,15 @@ public class Principal {
     private static void pesquisarPessoa(Hash hash, Scanner scanner) {
         System.out.print("Digite o ID da pessoa a ser pesquisada: ");
         int id = scanner.nextInt();
-    
+
         Pessoa pessoaEncontrada = hash.search(id);
-    
+
         if (pessoaEncontrada != null) {
             System.out.println("Pessoa encontrada: " + pessoaEncontrada.getNome());
         } else {
             System.out.println("Pessoa não encontrada.");
         }
     }
-    
 
     private static void removerPessoa(Hash hash, Scanner scanner) {
         System.out.print("Digite o ID da pessoa a ser removida: ");
@@ -159,19 +162,6 @@ public class Principal {
             System.out.println("A estrutura não está cheia.");
         }
     }
-
-   /* private static void pesquisarPorLetra(HashAlfabetica hash, Scanner scanner) {
-        System.out.print("Digite a letra para pesquisar: ");
-        char letra = scanner.next().charAt(0);
-
-        boolean[] busca = new boolean[1];
-        hash.searchPorLetra(letra, busca);
-        if (busca[0]) {
-            System.out.println("Pelo menos uma pessoa encontrada com a letra " + letra);
-        } else {
-            System.out.println("Nenhuma pessoa encontrada com a letra " + letra);
-        }
-    } */
 
     private static void verificarOrdemAlfabetica(HashAlfabetica hash) {
         hash.verificarOrdemAlfabetica();
